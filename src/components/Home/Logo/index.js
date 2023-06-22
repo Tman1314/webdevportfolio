@@ -1,123 +1,123 @@
 import './index.scss'
-import { useEffect, useRef } from 'react'
-import { DrawSVGPlugin } from 'gsap-trial/DrawSVGPlugin'
-import gsap from 'gsap-trial'
+import React, { useState, createRef, useEffect } from 'react'
+import styled from 'styled-components'
+import { useInView } from 'react-intersection-observer'
 
-const Logo = () => {
-  const bgRef = useRef()
-  const outlineLogoTRef = useRef()
-  const outlineLogoMRef = useRef()
-  const outlineLogoElipseRef = useRef()
+const Logo = (props) => {
+  const [inViewRef, inView] = useInView({
+    triggerOnce: true,
+  });
+  const pathRef = createRef();
+  const [pathLength, setPathLength] = useState();
 
   useEffect(() => {
-    gsap.registerPlugin(DrawSVGPlugin)
-
-    gsap
-      .timeline()
-      .to(bgRef.current, {
-        duration: 1,
-        opacity: 1,
-      })
-      .from(outlineLogoElipseRef.current, {
-        drawSVG: 0,
-        duration: 5,
-      })
-
-    gsap.fromTo(
-      [outlineLogoTRef.current, outlineLogoMRef.current],
-      {
-        opacity: 0,
-      },
-      {
-        opacity: 1,
-        delay: 6,
-        duration: 2,
-      }
-    )
-  }, [])
-
+    if (pathRef.current) {
+      setPathLength(pathRef.current.getTotalLength());
+    }
+  }, [pathRef]);
   return (
-    <div className="logo-container" ref={bgRef}>
+    <Wrapper
+    className={"logo-container"}
+    ref={inViewRef}
+    pathLength={pathLength}
+    >
       <svg
-        version="1.1"
-        id="svg2771"
-        width="559"
-        height="897"
-        viewBox="0 0 559 897"
-        xmlns="http://www.w3.org/2000/svg"
+        className={inView ? 'animated visible' : 'animated'}
+        viewBox='0 0 559 897'
+        {...props}
       >
-        <g className="svg-container">
-          <g
-            aria-label="TM"
-            transform="matrix(0.76376581,0,0,1.1152902,57.619073,274.87526)"
-            id="text"
+        <g
+          aria-label="T"
+          style={{
+            fontWeight: 700,
+            fontSize: '335.158px',
+            fontFamily: '&quot',
+            InkscapeFontSpecification: '&quot',
+            fill: '#022c43',
+            fillOpacity: 1,
+            fillRule: 'evenodd',
+            stroke: 'gold',
+            strokeWidth: 1.29547,
+            strokeOpacity: 1,
+          }}
+        >
+          <path
+            d="m.827 1.434 247.682 4.357v100.547l-83.79-13.741 23.126 157.86H67.86l18.098-157.86L.827 88.24Z"
             style={{
-              fontWeight: 'bold',
-              fontSize: '335.158px',
-              fontFamily: 'Super Mario 256',
               fill: '#022c43',
               fillOpacity: 1,
-              fillRule: 'evenodd',
-              stroke: '#ffd700',
-              strokeWidth: 3.0,
-              strokeOpacity: 1,
-            }}
-          >
-            <path
-              ref={outlineLogoTRef}
-              d="M 0.82690191,1.4340486 248.50866,5.7911025 V 106.3385 l -83.7895,-13.741478 23.1259,157.859408 H 67.8585 L 85.957031,92.597022 0.82690191,88.239968 Z"
-              id="t"
-              style={{
-                fill: '#022c43',
-                fillOpacity: 1,
-                stroke: '#ffd700',
-                strokeWidth: 3.0,
-                strokeDasharray: 'none',
-                strokeOpacity: 1,
-              }}
-            />
-            <path
-              ref={outlineLogoMRef}
-              d="M 156.72499,302.23718 265.73887,100.39356 h 64.43116 l 21.37527,61.0722 37.86477,-61.37756 57.1025,-1.221446 62.59901,219.554556 -81.53139,6.71794 -15.57341,-55.5757 -18.62702,-53.74354 -56.18642,50.07921 -43.0559,-57.10251 -51.60601,109.6246 -85.80644,-16.18413 z"
-              id="m"
-              style={{
-                fontWeight: 'bold',
-                fontSize: '305.361px',
-                fontFamily: 'Super Mario 256',
-                fill: '#022c43',
-                fillOpacity: 1,
-                fillRule: 'evenodd',
-                stroke: '#ffd700',
-                strokeWidth: 3.0,
-                strokeOpacity: 1,
-                opacity: 1,
-                strokeDasharray: 'none',
-              }}
-              transform="scale(1.2084087,0.82753459)"
-            />
-          </g>
-          <ellipse
-            ref={outlineLogoElipseRef}
-            style={{
-              opacity: 1,
-              fill: '#022c43',
-              fillOpacity: 0,
-              fillRule: 'evenodd',
-              stroke: '#ffd700',
-              strokeWidth: 3.0,
+              stroke: 'gold',
+              strokeWidth: 3.25047781,
               strokeDasharray: 'none',
               strokeOpacity: 1,
             }}
-            id="circle"
-            ry="291.34814"
-            rx="277.37347"
-            cy="447.62659"
-            cx="279.93036"
+            transform="matrix(.76377 0 0 1.11529 57.62 274.875)"
+          />
+          <path
+            d="m156.725 302.237 109.014-201.843h64.431l21.375 61.072 37.865-61.378 57.103-1.221 62.599 219.554-81.532 6.718-15.573-55.575-18.627-53.744-56.187 50.08-43.056-57.103-51.606 109.624-85.806-16.184z"
+            style={{
+              fontWeight: 700,
+              fontSize: '305.361px',
+              fontFamily: '&quot',
+              InkscapeFontSpecification: '&quot',
+              fill: '#022c43',
+              fillOpacity: 1,
+              fillRule: 'evenodd',
+              stroke: 'gold',
+              strokeWidth: 3.25047781,
+              strokeOpacity: 1,
+              opacity: 1,
+              strokeDasharray: 'none',
+            }}
+            transform="translate(57.62 274.875) scale(.92294)"
           />
         </g>
+        <ellipse
+          cx={279.93}
+          cy={447.627}
+          fill="none"
+          rx={277.373}
+          ry={291.348}
+          style={{
+            opacity: 1,
+            fill: '#022c43',
+            fillOpacity: 0,
+            fillRule: 'evenodd',
+            stroke: 'gold',
+            strokeWidth: 3.87333,
+            strokeDasharray: 'none',
+            strokeOpacity: 1,
+          }}
+        />
       </svg>
-    </div>
+    </Wrapper>
   )
-}
+};
+
+const Wrapper = styled.div`
+  .animated {
+    min-width: 559px;
+    max-width: 559px;
+    min-height: 897px;
+    max-height: 897px;
+    width: 100%;
+    height: 100px;
+    stroke-dasharray: ${(props) => props.pathLength};
+    stroke-dashoffset: ${(props) => props.pathLength};
+  }
+
+  .animated.visible {
+    animation: draw 6s linear forwards !important;
+  }
+
+  @keyframes draw {
+    from {
+      stroke-dashoffset: ${(props) => props.pathLength};
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+`;
 
 export default Logo
